@@ -13,6 +13,7 @@
 - Improved support for message replies and allowed mentions
 - Added client statistics (latency, uptime, etc)
 - Loggers, including the client's default logger, can now be configured at runtime (you can toggle the colors, too)
+- HTTP errors now log the full message (can be disabled in client options)
 - Most previously raw tables are now available as rich classes or structs
 - Added many direct client methods (e.g. `client:createMessage(channelId, ...)` can be used as an alternative to `channel:send(...)`, which uses the former internally)
 - In addition to the methods above, added "modify" methods for batch-patching objects (e.g. `channel:modify(payload)`)
@@ -192,6 +193,8 @@
 - Added `defaultImageSize`
 - Added `defaultAllowedMentions`
 - Added `logColors`
+- Added `prettyNewlines`
+- Added `logFullErrors`
 - Added `status`
 - Added `activity`
 - Renamed `shardCount` to `totalShardCount`
@@ -755,12 +758,14 @@ Note: This is effectively a new class compared to the old one. It provides a sim
 
 - Changed label colors from bold standard to non-bold bright
 - Added "critical" log-level with highest priority
-- Added `filePath` and `useColors` parameters to initializer
+- Added `filePath`, `useColors` and `prettyNewlines` parameters to initializer
 - Added `setLevel` method
 - Added `setDateTime` method
 - Added `setFile` method
 - Added `enableColors` method
 - Added `disableColors` method
+- Added `enablePrettyNewlines` method
+- Added `disablePrettyNewlines` method
 
 #### Mutex
 
