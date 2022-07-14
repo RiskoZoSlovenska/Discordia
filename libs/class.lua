@@ -52,10 +52,20 @@ local function profile()
 	return counts
 end
 
-local function mixin(target, source)
+local function mergeTables(target, source)
 	for k, v in pairs(source) do
 		target[k] = v
 	end
+end
+
+local function mixin(target, source)
+	if not isClass(target) then
+		error("target must be a class", 2)
+	end
+
+	mergeTables(target, source.methods)
+	mergeTables(getters[target], source.getters)
+	mergeTables(setters[target], source.setters)
 	return target
 end
 
@@ -150,12 +160,6 @@ return setmetatable({
 	local get = {}
 	local set = {}
 
-	if base then
-		mixin(class, base)
-		mixin(get, getters[base])
-		mixin(set, setters[base])
-	end
-
 	local properties = {}
 	local n = 0
 
@@ -163,6 +167,14 @@ return setmetatable({
 	bases[class] = base
 	getters[class] = get
 	setters[class] = set
+
+	if base then
+		mixin(class, {
+			methods = base,
+			getters = getters[base],
+			setters = setters[base],
+		})
+	end
 
 	function class:__index(k)
 		if get[k] then

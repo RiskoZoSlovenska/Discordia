@@ -458,4 +458,8 @@ function Client:followNewsChannel(channelId, targetId)
 	end
 end
 
-return Client
+return {
+	methods = Client,
+	getters = {},
+	setters = {},
+}

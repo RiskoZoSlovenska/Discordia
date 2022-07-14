@@ -584,4 +584,8 @@ function Client:modifyGuildChannelPositions(guildId, positions)
 	end
 end
 
-return Client
+return {
+	methods = Client,
+	getters = {},
+	setters = {},
+}

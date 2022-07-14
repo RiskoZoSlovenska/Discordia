@@ -9,18 +9,20 @@ local assertError = utils.assertError
 
 local Foo, Bar, Baz
 local foo, bar, baz
-local methods = {}
-local getters = {}
-local setters = {}
+local mixin = {
+	methods = {},
+	getters = {},
+	setters = {},
+}
 
 do
-	function methods.testMixinMethod()
+	function mixin.methods.testMixinMethod()
 		return 'mixin-method'
 	end
-	function getters.testMixinGetter(self)
+	function mixin.getters.testMixinGetter(self)
 		return self._mixin_property
 	end
-	function setters.testMixinSetter(self, new)
+	function mixin.setters.testMixinSetter(self, new)
 		self._mixin_property = new
 	end
 end
@@ -28,9 +30,7 @@ end
 do
 	local get, set
 	Foo, get, set = class('Foo', nil)
-	class.mixin(Foo, methods)
-	class.mixin(get, getters)
-	class.mixin(set, setters)
+	class.mixin(Foo, mixin)
 	function Foo:__init()
 		self._foo = 'foo'
 		self._method_foo = 'method-foo'
